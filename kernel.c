@@ -10,7 +10,7 @@ struct gdt_entry {
 	uint8_t access;
 	uint8_t flags;
 	uint8_t base_high;
-}__attribute__((packed));
+} __attribute__((packed));
 
 struct gdt_ptr_t {
 	uint16_t limit;
@@ -53,12 +53,11 @@ int term_color = 0x0F; // Black background, White foreground
 
 void kernel_main() {
 	// gdt init
-	gdt_ptr.limit = sizeof(struct gdt_entry) * 5 - 1;
-	gdt_ptr.base = (uintptr_t)&gdt; // stfu lsp im on 32 bit
-	// gdt_ptr.base = (uint32_t)&gdt; // stfu lsp im on 32 bit
+	gdt_ptr.limit = sizeof(struct gdt_entry) * 3 - 1;
+	gdt_ptr.base = (uint32_t)&gdt; // stfu im on 32 bit
 	set_gdt_gate(0, 0, 0, 0, 0); 					  // NULL segment
-	set_gdt_gate(1, 0, 0xFFFFFFFF, 0b10011010, 0xCF); // kernel code segment
-	set_gdt_gate(2, 0, 0xFFFFFFFF, 0b10010010, 0xCF); // kernel data segment
+	set_gdt_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // kernel code segment
+	set_gdt_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // kernel data segment
 	// set_gdt_gate(3, 0, 0xFFFFFFFF, 0b11111010, 0xCF); // user code segment
 	// set_gdt_gate(4, 0, 0xFFFFFFFF, 0b10010010, 0xCF); // user data segment
 	gdt_flush(&gdt_ptr);
