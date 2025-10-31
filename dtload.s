@@ -1,5 +1,5 @@
-.global GdtFlush
-GdtFlush:
+.global GdtLoad
+GdtLoad:
 	mov 4(%esp), %eax
 	lgdt (%eax) // load the GDT with the gdt pointer
     mov $0x10, %ax // 0x10 is the offset in the gdt to our data segment
@@ -8,8 +8,8 @@ GdtFlush:
     mov %ax, %gs
     mov %ax, %fs
     mov %ax, %ss
-    jmp $0x08,$flush // 0x08 is the offset to our code segment: Far jump!
-flush:
+    jmp $0x08,$Flush // 0x08 is the offset to our code segment: Far jump!
+Flush:
     ret
 .global IdtLoad
 IdtLoad:

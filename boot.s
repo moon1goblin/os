@@ -20,7 +20,7 @@ stack_top:
 .global _start
 _start:
 	mov $stack_top, %esp
-	call kernel_main
+	call KernelMain
 	cli
 loop:
 	hlt
